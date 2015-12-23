@@ -2,8 +2,6 @@
 
 include ',,/autoload.php';
 
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION,
-
 use scrapper\lib\Webscrape as Webscrape;
 
 
@@ -22,7 +20,8 @@ $packtPage->seturl($initialResultsPageUrl);
 
 $resultsPages[] = $initialResultsPageUrl; // Adding initial results page URL to $resultsPages array
 
-$initialResultsPageSrc = $packtPage->curlget(); //Requesting initial results page
+$addoptions = array('property' => , CURLOPT_FOLLOWLOCATION, 'type' =>, TRUE);
+$initialResultsPageSrc = $packtPage->curlget($addoptions); //Requesting initial results page
 
 $resultsPageXPath = $packtPage->xpath($initialResultsPageSrc);
 

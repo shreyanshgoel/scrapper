@@ -10,7 +10,7 @@ class Webscrape{
 
     	$this->_url = $url;
     }
-	function curlget(){
+	function curlget($addoptions = array()){
 
 
 		$ch = curl_init();	// Initialising cURL session
@@ -18,6 +18,15 @@ class Webscrape{
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
 		curl_setopt($ch, CURLOPT_URL, $this->_url);
+
+		if(!empty($addoptions)){
+
+			foreach ($addoptions as $key) {
+				
+				curl_setopt($ch, $key['property'], $key['type']);
+
+			}
+		}
 
 		$results = curl_exec($ch); // Executing cURL session
 
@@ -59,32 +68,27 @@ class Webscrape{
 	}
 
 	function curlPost($postUrl, $postFields, $successString) {
-	
+
 		$useragent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5;en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3'; // Setting user agent of a popular browser
 		
 		$cookie = 'cookie.txt';
 
-		$ch = curl_init();
+			
+		$addoptions = array(
+			array('property'=>, CURLOPT_SSL_VERIFYPEER, 'type'=>, FALSE), 
+			array('property'=>, CURLOPT_FAILONERROR, 'type'=>, TRUE), 
+			array('property'=>, CURLOPT_COOKIESESSION, 'type'=>, TRUE),
+			array('property'=>, CURLOPT_FOLLOWLOCATION, 'type'=>, TRUE)),
+			array('property'=>, CURLOPT_COOKIEFILE, 'type'=>, $cookie)),
+			array('property'=>, CURLOPT_COOKIEJAR, 'type'=>, $cookie)),
+			array('property'=>, CURLOPT_USERAGENT, 'type'=>, $useragent)),
+			array('property'=>, CURLOPT_POST, 'type'=>, TRUE)),
+			array('property'=>, CURLOPT_POSTFIELDS, 'type'=>, http_build_query($postFields)))
+		)
+	
+		$page = $this->curlget($addoptions);
 
-		// Setting a cookie file to store
-		// Initialising cURL session
-		// Setting cURL options
 
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // Prevent cURL from verifying SSL certificate
-		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE); // Script should fail silently on error
-		curl_setopt($ch, CURLOPT_COOKIESESSION, TRUE); // Use cookies
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE); // Follow Location: headers
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); // Returningtransfer as a string
-		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie); // Setting cookiefile
-		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); // Setting cookiejar
-		curl_setopt($ch, CURLOPT_USERAGENT, $useragent); // Setting useragent
-		curl_setopt($ch, CURLOPT_URL, $postUrl); // Setting URL to POST to
-		curl_setopt($ch, CURLOPT_POST, TRUE); // Setting method as POST
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postFields)); // Setting POST fields as array
-		
-		$results = curl_exec($ch); // Executing cURL session
-		
-		curl_close($ch); // Closing cURL session
 		
 		// Checking if login was successful by checking existence of string
 		if (strpos($results, $successString)) {
