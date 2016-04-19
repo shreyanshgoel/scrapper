@@ -11,5 +11,5 @@ $packtPage->seturl("http://www.amazon.in/gp/product/B00RHJOJKY/ref=s9_simh_gw_p1
 
 $page = $packtPage->curlget();
 
-echo $curl;
+echo $page;
 ?>

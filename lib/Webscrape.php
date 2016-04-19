@@ -73,7 +73,7 @@ class Webscrape{
 		
 		$cookie = 'cookie.txt';
 
-			
+		/*	
 		$addoptions = array(
 			array('property'=>, CURLOPT_SSL_VERIFYPEER, 'type'=>, FALSE), 
 			array('property'=>, CURLOPT_FAILONERROR, 'type'=>, TRUE), 
@@ -87,7 +87,7 @@ class Webscrape{
 		)
 	
 		$page = $this->curlget($addoptions);
-
+		*/
 
 		
 		// Checking if login was successful by checking existence of string
